@@ -262,6 +262,6 @@ def train_model(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--dataset', type=str, default='mnist',
-                        help='Dataset name {gmm_iso, gmm_aniso, mnist, fashionmnist, celeba, celeba2K}')
+                        help='Dataset name {gmm_iso, gmm_aniso, mnist, fashionmnist, celeba, celeba2K, naturalimages}')
     args = parser.parse_args()
     train_model(args)
