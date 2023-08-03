@@ -193,3 +193,15 @@ def vis_density_GRBM(model, config, epoch=None):
     plt.savefig(f"{config['exp_folder']}/GRBM_density_{epoch:05d}.png",
                 bbox_inches='tight')
     plt.close()
+
+
+class NaturalImage():
+    def __init__(self,
+                 path):
+        self.data = torch.load(path)
+
+    def __getitem__(self,index):
+        return self.data[index], 0
+        
+    def __len__(self):
+        return len(self.data)

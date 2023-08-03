@@ -7,7 +7,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms, utils
 import numpy as np
 from tqdm import tqdm
-from utils import setup_logging, vis_density_GMM, vis_2D_samples, visualize_sampling
+from utils import setup_logging, vis_density_GMM, vis_2D_samples, visualize_sampling, NaturalImage
 from gmm import GMM, GMMDataset
 from grbm import GRBM
 
@@ -110,6 +110,8 @@ def create_dataset(config):
                                               transforms.Normalize(config['img_mean'],
                                                                    config['img_std'])
                                           ]))
+    elif config['dataset'] == 'NaturalImages':
+        train_set = NaturalImage(path='data/NaturalImages/NaturalImages.pt')
 
     if 'GMM' not in config['dataset']:
         config['img_mean'] = torch.tensor(config['img_mean'])
