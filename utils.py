@@ -95,7 +95,7 @@ def save_gif_fancy(imgs, nrow, save_name):
              loop=0)
 
 
-def visualize_sampling(model, epoch, config, tag=None, is_show_gif=True):
+def visualize_sampling(model, epoch, config, tag=None, is_show_gif=True, writer=None):
     tag = '' if tag is None else tag
     B, C, H, W = config['sampling_batch_size'], config['channel'], config[
         'height'], config['width']
@@ -133,6 +133,12 @@ def visualize_sampling(model, epoch, config, tag=None, is_show_gif=True):
                             padding=1,
                             pad_value=1.0).cpu(),
             f"{config['exp_folder']}/sample_imgs_epoch_{epoch:05d}{tag}.png")
+        if writer is not None:
+            writer.log_image(
+                image=f"{config['exp_folder']}/sample_imgs_epoch_{epoch:05d}{tag}.png",
+                name="sample_imgs",
+                step=epoch,
+            )
 
 
 def vis_2D_samples(samples, config, tags=None):
