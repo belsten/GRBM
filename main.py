@@ -24,7 +24,7 @@ def save(model, results_folder, epoch):
 
 
 def load(model, results_folder, epoch):
-    data = torch.load(f'{results_folder}/model-{epoch}.pt')
+    data = torch.load(f'{results_folder}/model-{epoch}.pt',map_location=torch.device('cpu'))
     model.load_state_dict(data['model'])
 
 

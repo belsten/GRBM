@@ -31,7 +31,7 @@ def save(model, results_folder, epoch):
 
 
 def load(model, results_folder, epoch):
-    data = torch.load(f'{results_folder}/model-{epoch}.pt')
+    data = torch.load(f'{results_folder}/model-{epoch}.pt',map_location=torch.device('cpu'))
     model.load_state_dict(data['model'])
 
 
@@ -203,6 +203,9 @@ def train_model(args):
 
     is_show_training_data = False
     for epoch in range(config['resume'] + 1, config['epochs'] + 1):
+        
+        print("epoch: %d/%d"%(epoch+1, config['epochs']+1), end="")
+
         if epoch <= config['Langevin_adjust_warmup_epoch']:
             model.set_Langevin_adjust_step(config['CD_step'])
         else:
