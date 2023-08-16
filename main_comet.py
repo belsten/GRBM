@@ -214,7 +214,8 @@ def train_model(args):
                            config)
         
         writer.log_metric(
-            recon_loss,  
+            name="recon_loss",
+            value=recon_loss,  
             epoch=epoch,
         )
 
@@ -265,20 +266,24 @@ def train_model(args):
                     pad_value=1.0)
                 
                 writer.log_image(
-                    image=f"{config['exp_folder']}/filters_epoch_{epoch:05d}.png",
+                    image_data=f"{config['exp_folder']}/filters_epoch_{epoch:05d}.png",
                     name="filters",
                     step=epoch)
 
                 # visualize hidden states
                 data, _ = next(iter(train_loader))
+                
+                if config["cuda"]:
+                    data = data.cuda()
+
                 h_pos = model.prob_h_given_v(
-                    data.view(data.shape[0], -1).cuda(), model.get_var())
+                    data.view(data.shape[0], -1), model.get_var())
                 utils.save_image(h_pos.view(1, 1, -1, config['hidden_size']),
                                  f"{config['exp_folder']}/hidden_epoch_{epoch:05d}.png",
                                  normalize=True)
                 
                 writer.log_image(
-                    image=f"{config['exp_folder']}/hidden_epoch_{epoch:05d}.png",
+                    image_data=f"{config['exp_folder']}/hidden_epoch_{epoch:05d}.png",
                     name="hidden",
                     step=epoch)
 

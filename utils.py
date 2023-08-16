@@ -99,7 +99,11 @@ def visualize_sampling(model, epoch, config, tag=None, is_show_gif=True, writer=
     tag = '' if tag is None else tag
     B, C, H, W = config['sampling_batch_size'], config['channel'], config[
         'height'], config['width']
-    v_init = torch.randn(B, C, H, W).cuda()
+    
+    v_init = torch.randn(B, C, H, W)
+    if config['cuda']:
+        v_init = v_init.cuda()
+
     v_list = model.sampling(v_init,
                             num_steps=config['sampling_steps'],
                             save_gap=config['sampling_gap'])
@@ -118,8 +122,11 @@ def visualize_sampling(model, epoch, config, tag=None, is_show_gif=True, writer=
             img_vis = v_list[-1][1]
         else:
             if isinstance(config['img_std'], torch.Tensor):
-                mean = config['img_mean'].view(1, -1, 1, 1).cuda()
-                std = config['img_std'].view(1, -1, 1, 1).cuda()
+                mean = config['img_mean'].view(1, -1, 1, 1)
+                std = config['img_std'].view(1, -1, 1, 1)
+                if config['cuda']:
+                    mean = mean.cuda()
+                    std = std.cuda()
             else:
                 mean = config['img_mean']
                 std = config['img_std']
@@ -135,7 +142,7 @@ def visualize_sampling(model, epoch, config, tag=None, is_show_gif=True, writer=
             f"{config['exp_folder']}/sample_imgs_epoch_{epoch:05d}{tag}.png")
         if writer is not None:
             writer.log_image(
-                image=f"{config['exp_folder']}/sample_imgs_epoch_{epoch:05d}{tag}.png",
+                image_data=f"{config['exp_folder']}/sample_imgs_epoch_{epoch:05d}{tag}.png",
                 name="sample_imgs",
                 step=epoch,
             )
