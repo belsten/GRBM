@@ -111,7 +111,7 @@ def create_dataset(config):
                                                                    config['img_std'])
                                           ]))
     elif config['dataset'] == 'NaturalImages':
-        train_set = NaturalImage(path='data/NaturalImages/NaturalImages.pt')
+        train_set = NaturalImage(path='data/NaturalImages/NaturalImages-%d.pt'%(config['height']))
         normalize = transforms.Normalize(config['img_mean'],
                                          config['img_std'])
         train_set.data = normalize.forward(train_set.data)
