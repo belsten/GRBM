@@ -13,7 +13,7 @@
     "CD_step": 100,
     "CD_burnin": 0,
     "Langevin_step": 10,
-    "Langevin_eta": 20.0,
+    "Langevin_eta": 8.0,
     "is_anneal_Langevin": false,
     "Langevin_adjust_warmup_epoch": 0,
     "Langevin_adjust_step": 100,
@@ -33,5 +33,5 @@
     ],
     "log_interval": 100,
     "save_interval": 100,
-    "hidden_size": 256
+    "hidden_size": 512
 }
