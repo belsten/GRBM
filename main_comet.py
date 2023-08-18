@@ -169,8 +169,9 @@ def train_model(args):
                  inference_method=config['inference_method'],
                  Langevin_step=config['Langevin_step'],
                  Langevin_eta=config['Langevin_eta'],
-                 is_anneal_Langevin=True,
-                 Langevin_adjust_step=config['Langevin_adjust_step'])
+                 is_anneal_Langevin=config['is_anneal_Langevin'],
+                 Langevin_adjust_step=config['Langevin_adjust_step'],
+                 writer=writer)
 
     if config['cuda']:
         model.cuda()

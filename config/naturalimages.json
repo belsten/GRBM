@@ -14,6 +14,7 @@
     "CD_burnin": 0,
     "Langevin_step": 10,
     "Langevin_eta": 20.0,
+    "is_anneal_Langevin": true,
     "Langevin_adjust_warmup_epoch": 0,
     "Langevin_adjust_step": 100,
     "inference_method": "Gibbs-Langevin",

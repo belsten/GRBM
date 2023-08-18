@@ -17,7 +17,8 @@ class GRBM(nn.Module):
                  Langevin_step=10,
                  Langevin_eta=1.0,
                  is_anneal_Langevin=True,
-                 Langevin_adjust_step=0) -> None:
+                 Langevin_adjust_step=0,
+                 writer=None) -> None:
         super().__init__()
         # we use samples in [CD_burnin, CD_step) steps
         assert CD_burnin >= 0 and CD_burnin <= CD_step
@@ -38,6 +39,7 @@ class GRBM(nn.Module):
         self.b = nn.Parameter(torch.Tensor(hidden_size))
         self.mu = nn.Parameter(torch.Tensor(visible_size))
         self.log_var = nn.Parameter(torch.Tensor(visible_size))
+        self.writer = writer
         self.reset_parameters()
 
     def reset_parameters(self):
@@ -231,9 +233,11 @@ class GRBM(nn.Module):
         samples, var = [], self.get_var()
         eta_list = cosine_schedule(eta_max=eta, T=num_steps_Langevin)
 
-        h = torch.bernoulli(self.prob_h_given_v(v, var))
+        reject_percentage = 0.
 
-        for ii in range(num_steps):
+        h = torch.bernoulli(self.prob_h_given_v(v, var))
+        for ii in range(num_steps): # of contrastive divergence
+
             v_old, h_old = v, h
             # backward sampling
             for jj in range(num_steps_Langevin):
@@ -255,10 +259,18 @@ class GRBM(nn.Module):
                     -1, 1) + v_old * (tmp_u >= ratio).float().view(-1, 1)
                 h = h * (tmp_u < ratio).float().view(
                     -1, 1) + h_old * (tmp_u >= ratio).float().view(-1, 1)
+    
+                reject_percentage += (1.*(tmp_u >= ratio)).mean().item()
 
             if ii >= burn_in:
                 samples += [(v, h)]
 
+        reject_percentage = reject_percentage/np.max([1,num_steps-adjust_step])
+        if self.writer is not None:
+            self.writer.log_metric(
+                name="reject_percentage",
+                value=reject_percentage,  
+            )
         return samples
 
     @torch.no_grad()
