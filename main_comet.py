@@ -122,6 +122,11 @@ def create_dataset(config):
         normalize = transforms.Normalize(config['img_mean'],
                                          config['img_std'])
         train_set.data = normalize.forward(train_set.data)
+    elif config['dataset'] == 'NaturalImagesHighContrast':
+        train_set = NaturalImage(path='data/NaturalImages/NaturalImagesHighContrast-%d.pt'%(config['height']))
+        normalize = transforms.Normalize(config['img_mean'],
+                                         config['img_std'])
+        train_set.data = normalize.forward(train_set.data)
 
     if 'GMM' not in config['dataset']:
         config['img_mean'] = torch.tensor(config['img_mean'])
