@@ -52,7 +52,7 @@ def train(model,
 
         if ii == len(train_loader) - 1:
             recon_loss = model.reconstruction(data).item()
-            marginal_energy = model.marginal_energy(data).item()
+            marginal_energy = model.marginal_energy(data).sum().item()
 
     return recon_loss,marginal_energy
 

@@ -73,6 +73,7 @@ class GRBM(nn.Module):
     def marginal_energy(self, v):
         # compute per-sample energy averaged over batch size
         B = v.shape[0]
+        v = v.view(B, -1)
         var = self.get_var()
         eng = 0.5 * ((v - self.mu)**2 / var).sum(dim=1)
         eng -= F.softplus((v / var).mm(self.W) + self.b).sum(dim=1)
