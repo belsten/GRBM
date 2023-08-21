@@ -143,11 +143,11 @@ def train_model(args):
     with open(f'config/{args.dataset}.json') as json_file:
         config = json.load(json_file)
 
+    config['exp_folder'] = f"exp/{config['dataset']}_{config['model']}_{pid}_inference={config['inference_method']}_H={config['hidden_size']}_B={config['batch_size']}_CD={config['CD_step']}"
+
     writer.log_parameters(
         config,
     )
-
-    config['exp_folder'] = f"exp/{config['dataset']}_{config['model']}_{pid}_inference={config['inference_method']}_H={config['hidden_size']}_B={config['batch_size']}_CD={config['CD_step']}"
 
     if not os.path.isdir(config['exp_folder']):
         os.makedirs(config['exp_folder'])
