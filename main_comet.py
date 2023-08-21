@@ -205,8 +205,9 @@ def train_model(args):
     if config['resume'] > 0:
         load(model, config['exp_folder'], config['resume'])
 
-    for epoch in range(config['resume']):
-        scheduler.step()
+    if config["is_anneal_lr"]:
+        for epoch in range(config['resume']):
+            scheduler.step()
 
     is_show_training_data = False
     for epoch in range(config['resume'] + 1, config['epochs'] + 1):
@@ -306,8 +307,9 @@ def train_model(args):
         # save models periodically
         if epoch % config['save_interval'] == 0:
             save(model, config['exp_folder'], epoch)
-
-        scheduler.step()
+        
+        if config["is_anneal_lr"]:
+            scheduler.step()
 
 
 if __name__ == '__main__':
