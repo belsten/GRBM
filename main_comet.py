@@ -52,8 +52,9 @@ def train(model,
 
         if ii == len(train_loader) - 1:
             recon_loss = model.reconstruction(data).item()
+            marginal_energy = model.marginal_energy(data).item()
 
-    return recon_loss
+    return recon_loss,marginal_energy
 
 
 def create_dataset(config):
@@ -217,7 +218,7 @@ def train_model(args):
         else:
             model.set_Langevin_adjust_step(config['Langevin_adjust_step'])
 
-        recon_loss = train(model,
+        recon_loss, marginal_energy = train(model,
                            train_loader,
                            optimizer,
                            config)
@@ -225,6 +226,12 @@ def train_model(args):
         writer.log_metric(
             name="recon_loss",
             value=recon_loss,  
+            epoch=epoch,
+        )
+
+        writer.log_metric(
+            name="marginal_energy",
+            value=marginal_energy,  
             epoch=epoch,
         )
 
