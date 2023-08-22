@@ -1,0 +1,38 @@
+{
+    "dataset": "NaturalImagesMelchior",
+    "cuda": true,
+    "model": "GRBM",
+    "batch_size": 512,
+    "epochs": 1000,
+    "lr": 0.01,
+    "is_anneal_lr": true,
+    "clip_norm": 10.0,
+    "wd": 0.0,
+    "resume": 0,
+    "is_vis_verbose": true,
+    "init_var": 1.0,
+    "CD_step": 100,
+    "CD_burnin": 0,
+    "Langevin_step": 10,
+    "Langevin_eta": 20.0,
+    "is_anneal_Langevin": true,
+    "Langevin_adjust_warmup_epoch": 0,
+    "Langevin_adjust_step": 100,
+    "inference_method": "Gibbs-Langevin",
+    "sampling_batch_size": 100,
+    "sampling_steps": 100,
+    "sampling_gap": 5,
+    "sampling_nrow": 10,
+    "height": 14,
+    "width": 14,
+    "channel": 1,
+    "img_mean": [
+        0.3904632032
+    ],
+    "img_std": [
+        0.1489537954
+    ],
+    "log_interval": 100,
+    "save_interval": 100,
+    "hidden_size": 512
+}
