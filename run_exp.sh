@@ -1,5 +1,5 @@
-python main_comet.py --dataset vary_cd/naturalimages_highconstrast_1
-python main_comet.py --dataset vary_cd/naturalimages_highconstrast_5
-python main_comet.py --dataset vary_cd/naturalimages_highconstrast_10
-python main_comet.py --dataset vary_cd/naturalimages_highconstrast_100
-python main_comet.py --dataset vary_cd/naturalimages_highconstrast_200
+python main_comet.py --dataset vary_lr/naturalimages_melchior_0.2
+python main_comet.py --dataset vary_lr/naturalimages_melchior_0.1
+# python main_comet.py --dataset vary_lr/naturalimages_melchior_0.01
+python main_comet.py --dataset vary_lr/naturalimages_melchior_0.05
+python main_comet.py --dataset vary_lr/naturalimages_melchior_0.005
