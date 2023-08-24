@@ -241,6 +241,15 @@ def train_model(args):
             value=marginal_energy,  
             epoch=epoch,
         )
+        
+        with torch.no_grad():
+            mean_log_variance = model.log_var.detach().mean().item()
+
+        writer.log_metric(
+            name="mean_log_variance",
+            value=mean_log_variance,  
+            epoch=epoch,
+        )
 
         var = model.get_var().detach().cpu().numpy()
 
