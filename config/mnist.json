@@ -1,6 +1,6 @@
 {
     "dataset": "MNIST",
-    "cuda": false,
+    "cuda": true,
     "model": "GRBM",
     "batch_size": 512,
     "epochs": 3000,
