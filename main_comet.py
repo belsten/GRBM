@@ -87,7 +87,7 @@ def create_dataset(config):
     elif config['dataset'] == 'CelebA':
         train_set = datasets.CelebA('./data',
                                     split='train',
-                                    download=False,
+                                    download=True,
                                     transform=transforms.Compose([
                                         transforms.CenterCrop(
                                             config['crop_size']),
