@@ -135,7 +135,7 @@ def create_dataset(config):
                                          config['img_std'])
         train_set.data = normalize.forward(train_set.data)
     elif config['dataset'] == 'Bars':
-        train_set = NaturalImage(path='data/Bars/bars.pt')
+        train_set = NaturalImage(path='data/Bars/Bars.pt')
         normalize = transforms.Normalize(config['img_mean'],
                                          config['img_std'])
         train_set.data = normalize.forward(train_set.data)
