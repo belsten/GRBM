@@ -134,6 +134,11 @@ def create_dataset(config):
         normalize = transforms.Normalize(config['img_mean'],
                                          config['img_std'])
         train_set.data = normalize.forward(train_set.data)
+    elif config['dataset'] == 'Bars':
+        train_set = NaturalImage(path='data/Bars/bars.pt')
+        normalize = transforms.Normalize(config['img_mean'],
+                                         config['img_std'])
+        train_set.data = normalize.forward(train_set.data)
 
     if 'GMM' not in config['dataset']:
         config['img_mean'] = torch.tensor(config['img_mean'])
@@ -241,7 +246,7 @@ def train_model(args):
             value=marginal_energy,  
             epoch=epoch,
         )
-        
+
         with torch.no_grad():
             mean_log_variance = model.log_var.detach().mean().item()
 
