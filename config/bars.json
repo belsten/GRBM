@@ -27,10 +27,10 @@
     "width": 12,
     "channel": 1,
     "img_mean": [
-        0.1905236095
+        0.5007270575
     ],
     "img_std": [
-        0.3927142322
+        0.2135347128
     ],
     "log_interval": 10,
     "save_interval": 100,
